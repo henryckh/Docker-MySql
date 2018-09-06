@@ -1,0 +1,25 @@
+version: '3'
+services:
+  phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      container_name: phpmyadmin
+      environment: 
+        - PMA_ARBITRARY = 1
+      restart: always
+      ports: 
+        - "8080:80"
+      volumes: 
+        - /sessions
+      links:
+        - db
+  db:
+    image: my-mysql
+    build:
+      context: ./my_mysql
+    ports: 
+      - 3306:3306
+    restart:
+      always
+    environment:
+      - MYSQL_DATABASE=docker_testing
+      - MYSQL_ROOT_PASSWORD=testing
